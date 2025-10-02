@@ -1,8 +1,9 @@
-import Image from "next/image";
-import { WiDaySunny } from "react-icons/wi";
-import WeatherConditionIcon from "../WeatherConditionIcon";
+"use client";
 
-const IS_METRIC = true;
+import { useAtom } from "jotai";
+import WeatherConditionIcon from "../WeatherConditionIcon";
+import { isMetricAtom } from "@/app/atoms/isMetricAtom";
+
 const CurrentTemperature = ({
   currentTempC,
   currentTempF,
@@ -14,13 +15,26 @@ const CurrentTemperature = ({
   minTempF,
   conditionCode,
   isDay,
+}: {
+  currentTempC: number;
+  currentTempF: number;
+  feelsLikeC: number;
+  feelsLikeF: number;
+  maxTempC: number;
+  maxTempF: number;
+  minTempC: number;
+  minTempF: number;
+  conditionCode: number;
+  isDay: boolean;
 }) => {
+  const [isMetric] = useAtom(isMetricAtom);
+
   return (
-    <div className="flex flex-row items-center justify-between md:justify-start w-full text-black px-6 pt-4">
-      <span className="text-5xl">{`${IS_METRIC ? currentTempC : currentTempF}\u00B0`}</span>
+    <div className="flex flex-row items-center justify-between md:justify-start w-full text-black px-6 bg-transparent">
+      <span className="text-5xl">{`${isMetric ? currentTempC : currentTempF}\u00B0`}</span>
       <div className="flex flex-col text-xs mx-2">
-        <span>{`\u2191${IS_METRIC ? maxTempC : maxTempF}\u00B0 / \u2193${IS_METRIC ? minTempC : minTempF}\u00B0`}</span>
-        <span>{`Feels like ${IS_METRIC ? feelsLikeC : feelsLikeF}\u00B0`}</span>
+        <span>{`\u2191${isMetric ? maxTempC : maxTempF}\u00B0 / \u2193${isMetric ? minTempC : minTempF}\u00B0`}</span>
+        <span>{`Feels like ${isMetric ? feelsLikeC : feelsLikeF}\u00B0`}</span>
       </div>
       <WeatherConditionIcon
         className="w-16 h-16"

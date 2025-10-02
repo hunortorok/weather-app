@@ -34,11 +34,11 @@ import {
 const WeatherConditionIcon = ({
   className = "",
   conditionCode,
-  isDay,
+  isDay = false,
 }: {
   className?: string;
   conditionCode: number;
-  isDay: boolean;
+  isDay?: boolean;
 }) => {
   switch (conditionCode) {
     // Sunny / Clear
